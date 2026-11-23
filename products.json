@@ -62,6 +62,27 @@
         "es": "Una chaqueta negra en talla L. Consulta la publicación del vendedor para confirmar ajuste, materiales y disponibilidad."
       },
       "category": "Style"
+    },
+    {
+      "affiliateUrl": "dvdvgbhnjmil.com",
+      "active": true,
+      "price": "fdfdf",
+      "name": {
+        "en": "gdd",
+        "es": "dfdfd"
+      },
+      "order": 4,
+      "priceNote": {
+        "en": "dfdf",
+        "es": "fdfdf"
+      },
+      "id": "afdd",
+      "image": "/assets/uploads/gemini-3.1-flash-lite-image-nano-banana-2-lite-_b_close-up_editorial_s.jpeg",
+      "description": {
+        "en": "dfdfd",
+        "es": "dfdfdfd"
+      },
+      "category": "Home"
     }
   ]
 }
