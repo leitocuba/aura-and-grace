@@ -103,10 +103,14 @@ async function handleCallback(url, env) {
     return callbackPage(url.origin, "error", { message: "GitHub OAuth credentials are not configured." });
   }
   try {
-    const redirectUri = url.origin + "/callback?provider=github";
+    // CORRECCIÓN 1: El redirect_uri DEBE ser EXACTAMENTE el mismo en la autorización y en el intercambio de token.
+    const redirectUri = url.origin + "/callback"; 
     const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
       method: "POST",
-      headers: { "accept": "application/json", "content-type": "application/json" },
+      headers: { 
+        "accept": "application/json", 
+        "content-type": "application/json" 
+      },
       body: JSON.stringify({
         client_id: env.GITHUB_OAUTH_ID,
         client_secret: env.GITHUB_OAUTH_SECRET,
@@ -116,18 +120,23 @@ async function handleCallback(url, env) {
     });
     const tokenData = await tokenResponse.json();
     if (!tokenResponse.ok || !tokenData.access_token) {
-      return callbackPage(url.origin, "error", { message: "GitHub did not return an access token. Please try again." });
+      // CORRECCIÓN 2: Exponer el error real de GitHub para un diagnóstico preciso.
+      const errorMsg = tokenData.error_description || tokenData.error || "Unknown error";
+      return callbackPage(url.origin, "error", { message: `GitHub error: ${errorMsg}` });
     }
     return callbackPage(url.origin, "success", { token: tokenData.access_token });
-  } catch {
-    return callbackPage(url.origin, "error", { message: "Could not complete GitHub authorization. Please try again." });
+  } catch (error) {
+    return callbackPage(url.origin, "error", { message: `Could not complete GitHub authorization: ${error.message}` });
   }
 }
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (url.pathname === "/auth") return handleAuth(url, env);
+    // CORRECCIÓN 3: Aceptar tanto la ruta /auth como /auth/authorize.
+    if (url.pathname === "/auth" || url.pathname === "/auth/authorize") {
+      return handleAuth(url, env);
+    }
     if (url.pathname === "/callback") return handleCallback(url, env);
     return env.ASSETS.fetch(request);
   }
