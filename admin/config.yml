@@ -3,7 +3,7 @@ backend:
   repo: leitocuba/aura-and-grace
   branch: main
   base_url: https://aura-and-grace.1989frank20.workers.dev
-  auth_endpoint: /auth
+  auth_endpoint: /auth/authorize
 
 site_url: https://aura-and-grace.1989frank20.workers.dev
 display_url: https://aura-and-grace.1989frank20.workers.dev
