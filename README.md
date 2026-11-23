@@ -1,56 +1,98 @@
 # Aura & Grace
 
-A bilingual (English / Spanish), mobile-first affiliate discovery page.
+Bilingual (English / Spanish) affiliate discovery site and product catalog.
 
-## Current structure
+## Current architecture
 
-- `index.html` — page structure and content sections
-- `styles.css` — responsive editorial styling
-- `app.js` — language switch and catalog rendering
-- `products.json` — product data; the public catalog is driven by this file
-- `assets/` — product photographs (add the three optimized images here)
+- Cloudflare Worker serves the public static site and the private CMS interface.
+- GitHub repository `leitocuba/aura-and-grace`, branch `main`, stores the website and catalog.
+- `products.json` is the single catalog source. The public page reads `products` from this file.
+- Decap CMS at `/admin/` provides a visual editor for the catalog.
+- `worker.js` handles the GitHub OAuth handshake. GitHub credentials are Cloudflare Worker secrets and are never placed in browser code.
 
-## Initial catalog
+## Product catalog
 
-The catalog order is fixed as requested:
-1. AG-001 — Armchair / Sillón — $223.60
+Initial order and reference prices:
+1. AG-001 — Reclining armchair / Sillón — $223.60
 2. AG-002 — Arched LED mirror / Espejo LED arqueado, 16 × 60 in — $50.47
 3. AG-003 — Black jacket / Chaqueta negra, size L — $15.60
 
-Prices are reference values supplied by the owner and may change at the seller. Confirm them before relying on them in a campaign.
+These prices were supplied as reference values and may change at the seller. Confirm current price and stock before promoting.
 
-## Deploy with Cloudflare Pages
+## Cloudflare deployment
 
-1. In Cloudflare, open **Workers & Pages** and choose **Create application → Pages → Connect to Git**.
-2. Select `leitocuba/aura-and-grace` and branch `main`.
-3. Framework preset: **None**.
-4. Build command: leave blank.
-5. Build output directory: `/` (repository root).
-6. Deploy. Every commit to `main` will trigger a new deployment.
+The current Cloudflare project is a **Worker with Static Assets**, not Pages. This matches the successful deployment already made at the `workers.dev` address.
 
-Do not use GitHub Pages for this commercial affiliate site; use Cloudflare Pages.
+Build/deploy command in Cloudflare:
+- Deploy command: `npx wrangler deploy`
+- Build command: leave empty
+- Root directory: repository root
 
-## Product image assets
+`wrangler.jsonc` defines `worker.js` as the Worker entry point and serves the repository root as static assets. `.assetsignore` prevents Worker source/configuration files from being published as public files.
 
-The catalog expects these paths:
-- `assets/armchair.webp`
-- `assets/arched-led-mirror.webp`
-- `assets/black-jacket.webp`
+Do not change the deployment to Pages or change the build command without updating this architecture intentionally.
 
-The source photos were supplied in the planning conversation. Upload optimized WebP copies to the exact paths above before treating the live page as complete. If an image is not present, the page displays a neutral fallback rather than a broken-image icon.
+## One-time GitHub OAuth setup (required before CMS login works)
 
-## Updating the catalog manually (temporary workflow)
+The admin page and Decap configuration are in the repository, but login will not work until the OAuth application and Cloudflare secrets below are configured.
 
-Edit `products.json` in GitHub. Each product has:
-- `id`, `order`, `active`, `category`
-- bilingual `name` and `description`
-- `price`, bilingual `priceNote`
-- `image` and `affiliateUrl`
+### 1. Create a GitHub OAuth App
 
-To hide a product, set `"active": false`. To change order, update `order`. To add a product, copy one object, give it a unique ID and a new order, and fill in its fields. Save the change with a commit; Cloudflare Pages will redeploy.
+While signed in to the GitHub account that owns or can push to `leitocuba/aura-and-grace`:
 
-**Important:** this is not yet the promised visual admin dashboard. The next implementation phase is a protected CMS/admin workflow with secure authentication. Do not expose a GitHub token or password in frontend code. The CMS must not be considered ready until login, image upload, create/edit/hide/publish and production deployment have all been tested.
+1. Open GitHub **Settings → Developer settings → OAuth Apps → New OAuth App**.
+2. Application name: `Aura & Grace Admin`.
+3. Homepage URL: `https://aura-and-grace.1989frank20.workers.dev`.
+4. Authorization callback URL: `https://aura-and-grace.1989frank20.workers.dev/callback`.
+5. Register the application and keep its Client ID and Client Secret private.
 
-## Trust and disclosure
+### 2. Add secrets to the existing Cloudflare Worker
 
-Affiliate links open in a new tab and include `rel="sponsored nofollow noopener"`. The footer includes a plain-language affiliate disclosure. Add verified social profile URLs and a real contact/privacy policy before public promotion.
+In Cloudflare Dashboard, open **Workers & Pages → aura-and-grace → Settings → Variables and Secrets**. Add these as **Secrets**, not plain-text variables:
+
+- `GITHUB_OAUTH_ID` — GitHub OAuth App Client ID.
+- `GITHUB_OAUTH_SECRET` — GitHub OAuth App Client Secret.
+- `OAUTH_STATE_SECRET` — a new, long, random secret (at least 32 random bytes).
+
+Do not paste any of these secrets into GitHub files, the CMS config, browser code, or this chat.
+
+The repository is public, so `GITHUB_REPO_PRIVATE` is not needed; the Worker defaults to the public-repository `public_repo,user` scope. The signed, expiring OAuth state is verified by the Worker before exchanging the authorization code.
+
+After adding all three secrets, redeploy the Worker (a new GitHub commit will trigger the connected deployment; alternatively use the Cloudflare redeploy action).
+
+### 3. Open the admin panel
+
+Visit:
+
+`https://aura-and-grace.1989frank20.workers.dev/admin/`
+
+Choose GitHub login and authorize the account that has push access to the repository.
+
+## Using the admin panel
+
+The CMS edits `products.json` directly:
+
+- **Add:** use “Añadir producto” in the product list.
+- **Edit:** open a product and change its bilingual name/description, price, photo, category, affiliate URL, or order.
+- **Hide:** switch off “Visible en la web”. The product remains saved but is not displayed publicly.
+- **Publish:** save/publish the catalog entry. Decap commits the updated file to `main`; Cloudflare deploys the commit and the public catalog reads the new data.
+- **Delete:** remove the product from the list and save. This is permanent for the catalog file; hiding is safer when unsure.
+
+Use a unique product ID (AG-004, AG-005, etc.) and a distinct order number. Check both English and Spanish fields before publishing. Confirm affiliate URLs and prices before publication.
+
+Uploaded images are stored in `assets/uploads/` in this repository and served publicly as product images.
+
+## Social links
+
+The page currently displays Instagram, TikTok and Facebook as “Coming soon” labels, not links. They will become clickable only after the exact profile URLs are supplied and verified. This prevents placeholder links from jumping to the top of the page.
+
+## Security and launch checklist
+
+Do not consider the CMS ready until all of these have been tested:
+- GitHub OAuth login succeeds and rejects an invalid/expired state.
+- A product can be added, edited, hidden, reordered and deleted.
+- An image can be uploaded and displayed by the public catalog.
+- A save creates a commit on `main` and the connected Cloudflare deployment completes.
+- The public page works in English and Spanish on mobile and desktop.
+
+Never share GitHub passwords, OAuth Client Secrets, or Cloudflare API tokens.
