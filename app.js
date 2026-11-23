@@ -13,7 +13,7 @@ const translations = {
     stayConnected:"STAY CONNECTED", follow:"Follow along",
     socialCopy:"More inspiration, ideas and featured finds on our social channels.",
     affiliate:"Some links on this page are affiliate links. If you make a purchase through them, we may earn a commission at no additional cost to you.",
-    rights:"All rights reserved.", view:"VIEW AT TEMU", price:"Reference price"
+    rights:"All rights reserved.", view:"VIEW AT TEMU", price:"Reference price", instagramSoon:"Instagram · Coming soon", tiktokSoon:"TikTok · Coming soon", facebookSoon:"Facebook · Coming soon"
   },
   es: {
     announcement:"Hallazgos especiales para disfrutar más de cada día.",
@@ -29,7 +29,7 @@ const translations = {
     stayConnected:"SIGAMOS EN CONTACTO", follow:"Acompáñanos",
     socialCopy:"Más inspiración, ideas y productos destacados en nuestras redes sociales.",
     affiliate:"Algunos enlaces de esta página son enlaces de afiliado. Si realizas una compra a través de ellos, podemos recibir una comisión sin costo adicional para ti.",
-    rights:"Todos los derechos reservados.", view:"VER EN TEMU", price:"Precio de referencia"
+    rights:"Todos los derechos reservados.", view:"VER EN TEMU", price:"Precio de referencia", instagramSoon:"Instagram · Próximamente", tiktokSoon:"TikTok · Próximamente", facebookSoon:"Facebook · Próximamente"
   }
 };
 let language = localStorage.getItem("ag-language") || "en";
@@ -44,6 +44,11 @@ function applyLanguage() {
   document.getElementById("languageToggle").textContent = language === "en" ? "ES" : "EN";
   renderProducts();
 }
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[char]);
+}
 function renderProducts() {
   const root = document.getElementById("productList");
   const items = catalog.filter(p => p.active).sort((a,b) => a.order - b.order);
@@ -52,25 +57,42 @@ function renderProducts() {
     return;
   }
   root.innerHTML = items.map((p, index) => {
-    const name = p.name[language] || p.name.en;
-    const description = p.description[language] || p.description.en;
-    const note = p.priceNote[language] || p.priceNote.en;
-    const safeUrl = /^https:\/\//i.test(p.affiliateUrl) ? p.affiliateUrl : "#";
-    return `<article class="product-card">
-      <a class="product-image" href="${safeUrl}" target="_blank" rel="sponsored nofollow noopener" aria-label="${name}">
-        <img src="${p.image}" alt="${name}" loading="${index === 0 ? "eager" : "lazy"}" onerror="this.closest('.product-image').classList.add('image-missing');this.remove()">
-        <span class="image-fallback">A&G</span>
-      </a>
+    const name = escapeHtml(p.name?.[language] || p.name?.en || "");
+    const description = escapeHtml(p.description?.[language] || p.description?.en || "");
+    const note = escapeHtml(p.priceNote?.[language] || p.priceNote?.en || "");
+    const category = escapeHtml(p.category || "");
+    const price = escapeHtml(p.price || "");
+    const id = escapeHtml(p.id || "");
+    const order = Number.isFinite(Number(p.order)) ? String(p.order).padStart(2,"0") : "";
+    const safeUrl = typeof p.affiliateUrl === "string" && /^https:\/\//i.test(p.affiliateUrl) ? escapeHtml(p.affiliateUrl) : "";
+    const safeImage = typeof p.image === "string" && /^(?:\/)?assets\/[A-Za-z0-9_./-]+$/.test(p.image) ? escapeHtml(p.image) : "";
+    const imageMarkup = safeImage
+      ? `<img src="${safeImage}" alt="${name}" loading="${index === 0 ? "eager" : "lazy"}">`
+      : "";
+    const actionMarkup = safeUrl
+      ? `<a class="buy-link" href="${safeUrl}" target="_blank" rel="sponsored nofollow noopener">${translations[language].view}<span aria-hidden="true">↗</span></a>`
+      : `<span class="buy-link is-disabled" aria-disabled="true">${translations[language].view}</span>`;
+    return `<article class="product-card" data-product-id="${id}">
+      <div class="product-image ${safeImage ? "" : "image-missing"}">
+        ${imageMarkup}
+        <span class="image-fallback">A&amp;G</span>
+      </div>
       <div class="product-info">
-        <p class="product-index">${String(p.order).padStart(2,"0")} <span>·</span> ${p.category}</p>
+        <p class="product-index">${order} <span>·</span> ${category}</p>
         <h3>${name}</h3>
         <p class="product-description">${description}</p>
-        <p class="product-price"><span>${translations[language].price}</span> <strong>${p.price}</strong></p>
+        <p class="product-price"><span>${translations[language].price}</span> <strong>${price}</strong></p>
         <p class="price-note">${note}</p>
-        <a class="buy-link" href="${safeUrl}" target="_blank" rel="sponsored nofollow noopener">${translations[language].view}<span aria-hidden="true">↗</span></a>
+        ${actionMarkup}
       </div>
     </article>`;
   }).join("");
+  root.querySelectorAll(".product-image img").forEach(img => {
+    img.addEventListener("error", () => {
+      img.closest(".product-image").classList.add("image-missing");
+      img.remove();
+    }, { once:true });
+  });
 }
 async function init() {
   document.getElementById("year").textContent = new Date().getFullYear();
