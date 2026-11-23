@@ -11,7 +11,7 @@
     },
     "price": "$223.60",
     "priceNote": { "en": "Price provided for reference; seller pricing may change.", "es": "Precio de referencia proporcionado; el vendedor puede modificarlo." },
-    "image": "assets/armchair.webp",
+    "image": "assets/armchair.svg",
     "affiliateUrl": "https://temu.to/k/pmvi1m3e918"
   },
   {
@@ -26,7 +26,7 @@
     },
     "price": "$50.47",
     "priceNote": { "en": "Price provided for reference; seller pricing may change.", "es": "Precio de referencia proporcionado; el vendedor puede modificarlo." },
-    "image": "assets/arched-led-mirror.webp",
+    "image": "assets/arched-led-mirror.svg",
     "affiliateUrl": "https://temu.to/k/p6hr14hwigr"
   },
   {
@@ -41,7 +41,7 @@
     },
     "price": "$15.60",
     "priceNote": { "en": "Price provided for reference; seller pricing may change.", "es": "Precio de referencia proporcionado; el vendedor puede modificarlo." },
-    "image": "assets/black-jacket.webp",
+    "image": "assets/black-jacket.svg",
     "affiliateUrl": "https://temu.to/k/pptyviujcly"
   }
 ]
