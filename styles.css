@@ -126,3 +126,18 @@ a:focus-visible, button:focus-visible {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
+
+
+/* Clear affiliate and price disclosures */
+.affiliate-intro { max-width: 850px; margin: -28px auto 38px; padding: 0 24px; text-align: center; }
+.affiliate-intro p { margin: 0; color: var(--ink); font-size: 12px; line-height: 1.7; }
+.product-affiliate-note { margin: 9px 0 0; color: var(--ink); font-size: 11px; line-height: 1.5; font-weight: 600; }
+.price-change-note { margin: -1px 0 5px; color: var(--accent); font-size: 10px; line-height: 1.5; }
+.footer-contact { overflow-wrap: anywhere; }
+.footer-links a { color: var(--ink); text-underline-offset: 3px; }
+@media (max-width: 600px) {
+  .affiliate-intro { margin: -16px 0 28px; padding: 0 20px; }
+  .affiliate-intro p { font-size: 11px; }
+  .product-affiliate-note { font-size: 10px; }
+  .price-change-note { font-size: 9px; }
+}
