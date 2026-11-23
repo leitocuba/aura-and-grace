@@ -17,19 +17,19 @@ collections:
     label: "Catálogo"
     files:
       - name: "products"
-        label: "Productos"
+        label: "Productos Físicos"
         file: "products.json"
         fields:
           - label: "Lista de productos"
             name: "products"
             widget: "list"
             label_singular: "Producto"
-            summary: "{{fields.id}} · {{fields.name.en}}"
+            summary: "{{fields.category}} · {{fields.name.es}}"
             fields:
               - { label: "Código interno", name: "id", widget: "string", hint: "Ejemplo: AG-004. Debe ser único." }
               - { label: "Orden de aparición", name: "order", widget: "number", value_type: "int", min: 1 }
               - { label: "Visible en la web", name: "active", widget: "boolean", default: true }
-              - { label: "Categoría", name: "category", widget: "select", options: ["Home", "Style", "Beauty", "Lifestyle", "Other"], default: "Home" }
+              - { label: "Categoría", name: "category", widget: "select", options: ["Ropa", "Hogar", "Belleza", "Accesorios", "Tecnología", "Otros"], default: "Hogar" }
               - label: "Nombre del producto"
                 name: "name"
                 widget: "object"
@@ -42,7 +42,7 @@ collections:
                 fields:
                   - { label: "Inglés", name: "en", widget: "text" }
                   - { label: "Español", name: "es", widget: "text" }
-              - { label: "Precio mostrado", name: "price", widget: "string", hint: "Incluye moneda. Ejemplo: $29.99. Verifica el precio antes de publicar." }
+              - { label: "Precio mostrado", name: "price", widget: "string", hint: "Incluye moneda. Ejemplo: $29.99." }
               - label: "Nota sobre el precio"
                 name: "priceNote"
                 widget: "object"
@@ -50,4 +50,34 @@ collections:
                   - { label: "Inglés", name: "en", widget: "string" }
                   - { label: "Español", name: "es", widget: "string" }
               - { label: "Fotografía del producto", name: "image", widget: "image", choose_url: false }
-              - { label: "Enlace de afiliado", name: "affiliateUrl", widget: "string", hint: "Pega el enlace completo https:// del producto." }
+              - { label: "Enlace de afiliado", name: "affiliateUrl", widget: "string", hint: "Pega el enlace https:// del producto." }
+      
+      - name: "apps"
+        label: "Apps y Herramientas IA"
+        file: "apps.json"
+        fields:
+          - label: "Lista de Apps"
+            name: "products"
+            widget: "list"
+            label_singular: "App"
+            summary: "{{fields.name.es}}"
+            fields:
+              - { label: "Código interno", name: "id", widget: "string" }
+              - { label: "Orden de aparición", name: "order", widget: "number", value_type: "int", min: 1 }
+              - { label: "Visible en la web", name: "active", widget: "boolean", default: true }
+              - { label: "Categoría Fija", name: "category", widget: "hidden", default: "Apps & IA" }
+              - label: "Nombre de la App"
+                name: "name"
+                widget: "object"
+                fields:
+                  - { label: "Inglés", name: "en", widget: "string" }
+                  - { label: "Español", name: "es", widget: "string" }
+              - label: "Descripción"
+                name: "description"
+                widget: "object"
+                fields:
+                  - { label: "Inglés", name: "en", widget: "text" }
+                  - { label: "Español", name: "es", widget: "text" }
+              - { label: "Precio / Plan", name: "price", widget: "string", hint: "Ej: Gratis, $4.99/mes" }
+              - { label: "Logo o captura", name: "image", widget: "image", choose_url: false }
+              - { label: "Enlace de descarga/afiliado", name: "affiliateUrl", widget: "string" }
