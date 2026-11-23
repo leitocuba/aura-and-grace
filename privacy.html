@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f0e9">
+  <meta name="description" content="Aura & Grace privacy information.">
+  <meta property="og:title" content="Privacy | Aura & Grace">
+  <meta property="og:description" content="How Aura & Grace handles information and links to external services.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Privacy | Aura & Grace">
+  <meta name="twitter:description" content="How Aura & Grace handles information and links to external services.">
+  <title>Privacy | Aura & Grace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .privacy-page{max-width:760px;margin:0 auto;padding:76px 24px 90px}
+    .privacy-page h1{font:500 clamp(38px,6vw,56px)/1.15 var(--serif);margin:14px 0 28px}
+    .privacy-page h2{font:500 23px var(--serif);margin:30px 0 8px}
+    .privacy-page p{font-size:13px;line-height:1.9;color:var(--muted)}
+    .privacy-page a{color:var(--ink)}
+    .privacy-back{display:inline-block;margin-top:24px;text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:5px;font-size:11px}
+  </style>
+</head>
+<body>
+  <div class="announcement" data-i18n="announcement">Thoughtful finds for a more beautiful everyday.</div>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">AURA <span>&</span> GRACE</a>
+    <nav class="header-nav" aria-label="Main navigation">
+      <a href="index.html#discover" data-i18n="navDiscover">Discover</a>
+      <a href="index.html#about" data-i18n="navAbout">How we choose</a>
+    </nav>
+    <button class="language-toggle" id="languageToggle" type="button" aria-label="Change language">ES</button>
+  </header>
+  <main class="privacy-page">
+    <p class="eyebrow" data-i18n="privacyEyebrow">AURA & GRACE</p>
+    <h1 data-i18n="privacyTitle">Privacy</h1>
+    <h2 data-i18n="privacyInfoTitle">Information on this website</h2>
+    <p data-i18n="privacyInfo">Aura & Grace is an informational product-curation website. This site does not provide user accounts, checkout, or payment processing. The language preference is stored in your browser using local storage so the site can remember your selected language.</p>
+    <h2 data-i18n="privacyThirdTitle">Third-party services and links</h2>
+    <p data-i18n="privacyThird">This website loads fonts from Google Fonts. Product and referral links may take you to Temu, where browsing, purchases, payments, shipping, and related data handling are governed by Temu's own terms and privacy practices. We may earn a commission from qualifying affiliate purchases at no extra cost to you.</p>
+    <h2 data-i18n="privacyCookiesTitle">Cookies and analytics</h2>
+    <p data-i18n="privacyCookies">We have not added an analytics dashboard or a first-party tracking form to this website. Third-party services you visit or resources loaded from external providers may process technical information or use cookies under their own policies. We do not make claims about the cookie practices of those providers.</p>
+    <h2 data-i18n="privacyContactTitle">Contact</h2>
+    <p><span data-i18n="privacyContact">For privacy questions, contact us at</span> [TU_CORREO_AQUI].</p>
+    <a class="privacy-back" href="index.html" data-i18n="privacyBack">Back to Aura & Grace</a>
+  </main>
+  <footer class="site-footer">
+    <a class="footer-brand" href="index.html">AURA <span>&</span> GRACE</a>
+    <p>© <span id="year"></span> Aura & Grace.</p>
+  </footer>
+  <script>
+    const privacyTranslations = {
+      en: {
+        announcement:"Thoughtful finds for a more beautiful everyday.", navDiscover:"Discover", navAbout:"How we choose",
+        privacyEyebrow:"AURA & GRACE", privacyTitle:"Privacy",
+        privacyInfoTitle:"Information on this website",
+        privacyInfo:"Aura & Grace is an informational product-curation website. This site does not provide user accounts, checkout, or payment processing. The language preference is stored in your browser using local storage so the site can remember your selected language.",
+        privacyThirdTitle:"Third-party services and links",
+        privacyThird:"This website loads fonts from Google Fonts. Product and referral links may take you to Temu, where browsing, purchases, payments, shipping, and related data handling are governed by Temu's own terms and privacy practices. We may earn a commission from qualifying affiliate purchases at no extra cost to you.",
+        privacyCookiesTitle:"Cookies and analytics",
+        privacyCookies:"We have not added an analytics dashboard or a first-party tracking form to this website. Third-party services you visit or resources loaded from external providers may process technical information or use cookies under their own policies. We do not make claims about the cookie practices of those providers.",
+        privacyContactTitle:"Contact", privacyContact:"For privacy questions, contact us at",
+        privacyBack:"Back to Aura & Grace"
+      },
+      es: {
+        announcement:"Hallazgos especiales para disfrutar más de cada día.", navDiscover:"Descubrir", navAbout:"Cómo elegimos",
+        privacyEyebrow:"AURA & GRACE", privacyTitle:"Privacidad",
+        privacyInfoTitle:"Información de este sitio",
+        privacyInfo:"Aura & Grace es un sitio informativo de selección de productos. Este sitio no ofrece cuentas de usuario, carrito de compra ni procesamiento de pagos. La preferencia de idioma se guarda en el almacenamiento local de tu navegador para recordar el idioma que seleccionaste.",
+        privacyThirdTitle:"Servicios y enlaces de terceros",
+        privacyThird:"Este sitio carga tipografías desde Google Fonts. Los enlaces de productos y referidos pueden dirigirte a Temu, donde la navegación, las compras, los pagos, los envíos y el tratamiento de datos relacionado se rigen por sus propios términos y prácticas de privacidad. Podemos recibir una comisión por compras de afiliado que cumplan los requisitos, sin costo adicional para ti.",
+        privacyCookiesTitle:"Cookies y analítica",
+        privacyCookies:"No hemos añadido a este sitio un panel de analítica ni un formulario propio de seguimiento. Los servicios de terceros que visites o los recursos cargados desde proveedores externos pueden procesar información técnica o utilizar cookies conforme a sus propias políticas. No hacemos afirmaciones sobre las prácticas de cookies de esos proveedores.",
+        privacyContactTitle:"Contacto", privacyContact:"Para preguntas sobre privacidad, puedes escribirnos a",
+        privacyBack:"Volver a Aura & Grace"
+      }
+    };
+    let language = localStorage.getItem("ag-language") || "es";
+    function applyPrivacyLanguage(){
+      document.documentElement.lang=language;
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key=el.dataset.i18n;
+        if(privacyTranslations[language][key]) el.textContent=privacyTranslations[language][key];
+      });
+      document.getElementById("languageToggle").textContent=language==="en"?"ES":"EN";
+    }
+    document.getElementById("languageToggle").addEventListener("click",()=>{
+      language=language==="en"?"es":"en";
+      localStorage.setItem("ag-language",language);
+      applyPrivacyLanguage();
+    });
+    document.getElementById("year").textContent=new Date().getFullYear();
+    applyPrivacyLanguage();
+  </script>
+</body>
+</html>
