@@ -1,0 +1,53 @@
+backend:
+  name: github
+  repo: leitocuba/aura-and-grace
+  branch: main
+  base_url: https://aura-and-grace.1989frank20.workers.dev
+  auth_endpoint: /auth
+
+site_url: https://aura-and-grace.1989frank20.workers.dev
+display_url: https://aura-and-grace.1989frank20.workers.dev
+locale: es
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "catalog"
+    label: "Catálogo"
+    files:
+      - name: "products"
+        label: "Productos"
+        file: "products.json"
+        fields:
+          - label: "Lista de productos"
+            name: "products"
+            widget: "list"
+            label_singular: "Producto"
+            summary: "{{fields.id}} · {{fields.name.en}}"
+            fields:
+              - { label: "Código interno", name: "id", widget: "string", hint: "Ejemplo: AG-004. Debe ser único." }
+              - { label: "Orden de aparición", name: "order", widget: "number", value_type: "int", min: 1 }
+              - { label: "Visible en la web", name: "active", widget: "boolean", default: true }
+              - { label: "Categoría", name: "category", widget: "select", options: ["Home", "Style", "Beauty", "Lifestyle", "Other"], default: "Home" }
+              - label: "Nombre del producto"
+                name: "name"
+                widget: "object"
+                fields:
+                  - { label: "Inglés", name: "en", widget: "string" }
+                  - { label: "Español", name: "es", widget: "string" }
+              - label: "Descripción"
+                name: "description"
+                widget: "object"
+                fields:
+                  - { label: "Inglés", name: "en", widget: "text" }
+                  - { label: "Español", name: "es", widget: "text" }
+              - { label: "Precio mostrado", name: "price", widget: "string", hint: "Incluye moneda. Ejemplo: $29.99. Verifica el precio antes de publicar." }
+              - label: "Nota sobre el precio"
+                name: "priceNote"
+                widget: "object"
+                fields:
+                  - { label: "Inglés", name: "en", widget: "string" }
+                  - { label: "Español", name: "es", widget: "string" }
+              - { label: "Fotografía del producto", name: "image", widget: "image", choose_url: false }
+              - { label: "Enlace de afiliado", name: "affiliateUrl", widget: "string", hint: "Pega el enlace completo https:// del producto." }
