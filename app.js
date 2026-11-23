@@ -20,8 +20,8 @@ const translations = {
     contactLabel: "Contact", privacyLink: "Privacy",
     rights: "All rights reserved.",
     view: "VIEW PRODUCT", price: "Reference price",
-    emptyCatalog: "The collection is being refreshed. Please check back soon.",
-    errorCatalog: "The collection could not be loaded. Please try again later."
+    emptyCatalog: "Our selection is temporarily unavailable. Please check back soon.",
+    errorCatalog: "Our selection is temporarily unavailable. Please check back soon."
   },
   es: {
     announcement: "Hallazgos especiales para disfrutar más de cada día.",
@@ -44,8 +44,8 @@ const translations = {
     contactLabel: "Contacto", privacyLink: "Privacidad",
     rights: "Todos los derechos reservados.",
     view: "VER PRODUCTO", price: "Precio de referencia",
-    emptyCatalog: "La colección se está actualizando. Por favor, vuelve pronto.",
-    errorCatalog: "No se pudo cargar la colección. Por favor, inténtalo más tarde."
+    emptyCatalog: "Nuestra selección no está disponible en este momento. Vuelve pronto.",
+    errorCatalog: "Nuestra selección no está disponible en este momento. Vuelve pronto."
   }
 };
 
