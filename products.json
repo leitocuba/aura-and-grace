@@ -1,67 +1,67 @@
 {
   "products": [
     {
-      "id": "AG-001",
-      "order": 1,
+      "affiliateUrl": "https://temu.to/k/pmvi1m3e918",
       "active": true,
-      "category": "Home",
+      "price": "$223.60",
       "name": {
         "en": "Reclining armchair",
         "es": "Sillón reclinable"
       },
+      "order": 1,
+      "priceNote": {
+        "en": "Price provided for reference; seller pricing may change.",
+        "es": "Precio de referencia proporcionado; el vendedor puede modificarlo."
+      },
+      "id": "AG-001",
+      "image": "/assets/uploads/sillon-foto.avif",
       "description": {
         "en": "A warm-toned accent chair for a comfortable living space. Visit the seller's page for current details and options.",
         "es": "Un sillón en tono cálido para crear un espacio acogedor. Consulta la página del vendedor para ver los detalles y opciones actuales."
       },
-      "price": "$223.60",
-      "priceNote": {
-        "en": "Price provided for reference; seller pricing may change.",
-        "es": "Precio de referencia proporcionado; el vendedor puede modificarlo."
-      },
-      "image": "assets/armchair.svg",
-      "affiliateUrl": "https://temu.to/k/pmvi1m3e918"
+      "category": "Home"
     },
     {
-      "id": "AG-002",
-      "order": 2,
+      "affiliateUrl": "https://temu.to/k/p6hr14hwigr",
       "active": true,
-      "category": "Home",
+      "price": "$50.47",
       "name": {
         "en": "Arched LED mirror · 16 × 60 in",
         "es": "Espejo LED arqueado · 16 × 60 pulgadas"
       },
+      "order": 2,
+      "priceNote": {
+        "en": "Price provided for reference; seller pricing may change.",
+        "es": "Precio de referencia proporcionado; el vendedor puede modificarlo."
+      },
+      "id": "AG-002",
+      "image": "/assets/uploads/gemini_generated_image_dj9atfdj9atfdj9a.jpg",
       "description": {
         "en": "An arched full-length LED mirror with three light tones.",
         "es": "Un espejo LED de cuerpo entero con diseño arqueado y tres tonos de luz."
       },
-      "price": "$50.47",
-      "priceNote": {
-        "en": "Price provided for reference; seller pricing may change.",
-        "es": "Precio de referencia proporcionado; el vendedor puede modificarlo."
-      },
-      "image": "assets/arched-led-mirror.svg",
-      "affiliateUrl": "https://temu.to/k/p6hr14hwigr"
+      "category": "Home"
     },
     {
-      "id": "AG-003",
-      "order": 3,
+      "affiliateUrl": "https://temu.to/k/pptyviujcly",
       "active": true,
-      "category": "Style",
+      "price": "$15.60",
       "name": {
         "en": "Black jacket · Size L",
         "es": "Chaqueta negra · Talla L"
       },
-      "description": {
-        "en": "A black jacket in size L. Check the seller's listing for fit, materials and availability.",
-        "es": "Una chaqueta negra en talla L. Consulta la publicación del vendedor para confirmar ajuste, materiales y disponibilidad."
-      },
-      "price": "$15.60",
+      "order": 3,
       "priceNote": {
         "en": "Price provided for reference; seller pricing may change.",
         "es": "Precio de referencia proporcionado; el vendedor puede modificarlo."
       },
-      "image": "assets/black-jacket.svg",
-      "affiliateUrl": "https://temu.to/k/pptyviujcly"
+      "id": "AG-003",
+      "image": "/assets/uploads/gemini-3.1-flash-lite-image-nano-banana-2-lite-_b_close-up_editorial_s.jpeg",
+      "description": {
+        "en": "A black jacket in size L. Check the seller's listing for fit, materials and availability.",
+        "es": "Una chaqueta negra en talla L. Consulta la publicación del vendedor para confirmar ajuste, materiales y disponibilidad."
+      },
+      "category": "Style"
     }
   ]
 }
