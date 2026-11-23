@@ -65,7 +65,7 @@ async function handleAuth(url, env) {
     return new Response("OAuth is not configured yet.", { status: 503 });
   }
   const state = await createState(env.OAUTH_STATE_SECRET);
-  const redirectUri = url.origin + "/callback?provider=github";
+  const redirectUri = url.origin + "/callback";
   const scope = env.GITHUB_REPO_PRIVATE === "1" ? "repo,user" : "public_repo,user";
   const authorize = new URL("https://github.com/login/oauth/authorize");
   authorize.searchParams.set("client_id", env.GITHUB_OAUTH_ID);
@@ -94,9 +94,6 @@ function callbackPage(origin, status, payload) {
 }
 
 async function handleCallback(url, env) {
-  if (url.searchParams.get("provider") !== "github") {
-    return new Response("Invalid provider", { status: 400 });
-  }
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   if (!code || !(await verifyState(state, env.OAUTH_STATE_SECRET))) {
