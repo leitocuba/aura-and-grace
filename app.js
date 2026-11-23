@@ -82,7 +82,8 @@ async function init() {
   try {
     const response = await fetch("products.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Catalog could not be loaded");
-    catalog = await response.json();
+    const data = await response.json();
+    catalog = Array.isArray(data) ? data : (data.products || []);
     renderProducts();
   } catch (error) {
     document.getElementById("productList").innerHTML = '<p class="empty">The collection could not be loaded. Please try again later.</p>';
