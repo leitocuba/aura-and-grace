@@ -2,11 +2,11 @@ backend:
   name: github
   repo: leitocuba/aura-and-grace
   branch: main
-  base_url: https://aura-and-grace.1989frank20.workers.dev
+  base_url: https://aura-and-grace.auraandgrace.workers.dev
   auth_endpoint: /auth
 
-site_url: https://aura-and-grace.1989frank20.workers.dev
-display_url: https://aura-and-grace.1989frank20.workers.dev
+site_url: https://aura-and-grace.auraandgrace.workers.dev
+display_url: https://aura-and-grace.auraandgrace.workers.dev
 locale: es
 
 media_folder: "assets/uploads"
