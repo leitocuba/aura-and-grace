@@ -127,9 +127,21 @@ async function handleCallback(url, env) {
       tokenData = Object.fromEntries(new URLSearchParams(tokenText));
     }
     if (!tokenResponse.ok || !tokenData.access_token) {
-      const errorMsg = tokenData.error_description || tokenData.error ||
-        `GitHub returned no access token (HTTP ${tokenResponse.status}, ${tokenResponse.headers.get("content-type") || "unknown content type"}).`;
-      return callbackPage(url.origin, "error", { message: `GitHub error: ${errorMsg}` });
+      const retryAfter = tokenResponse.headers.get("retry-after");
+      const resetAt = tokenResponse.headers.get("x-ratelimit-reset");
+      const detail = tokenData.error_description || tokenData.error || tokenData.message ||
+        (typeof tokenData === "object" ? JSON.stringify(tokenData) : String(tokenData));
+      const retryInfo = retryAfter
+        ? ` Retry after ${retryAfter} seconds.`
+        : resetAt
+          ? ` Rate limit reset at UTC epoch ${resetAt}.`
+          : "";
+      const errorMsg = detail && detail !== "{}"
+        ? detail
+        : `GitHub returned no access token (HTTP ${tokenResponse.status}).`;
+      return callbackPage(url.origin, "error", {
+        message: `GitHub error: ${errorMsg} (HTTP ${tokenResponse.status}).${retryInfo}`
+      });
     }
     return callbackPage(url.origin, "success", { token: tokenData.access_token });
   } catch (error) {
