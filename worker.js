@@ -105,23 +105,30 @@ async function handleCallback(url, env) {
   try {
     // CORRECCIÓN 1: El redirect_uri DEBE ser EXACTAMENTE el mismo en la autorización y en el intercambio de token.
     const redirectUri = url.origin + "/callback"; 
+    const tokenBody = new URLSearchParams({
+      client_id: env.GITHUB_OAUTH_ID,
+      client_secret: env.GITHUB_OAUTH_SECRET,
+      code,
+      redirect_uri: redirectUri
+    });
     const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
       method: "POST",
-      headers: { 
-        "accept": "application/json", 
-        "content-type": "application/json" 
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/x-www-form-urlencoded"
       },
-      body: JSON.stringify({
-        client_id: env.GITHUB_OAUTH_ID,
-        client_secret: env.GITHUB_OAUTH_SECRET,
-        code,
-        redirect_uri: redirectUri
-      })
+      body: tokenBody.toString()
     });
-    const tokenData = await tokenResponse.json();
+    const tokenText = await tokenResponse.text();
+    let tokenData = {};
+    try {
+      tokenData = JSON.parse(tokenText);
+    } catch {
+      tokenData = Object.fromEntries(new URLSearchParams(tokenText));
+    }
     if (!tokenResponse.ok || !tokenData.access_token) {
-      // CORRECCIÓN 2: Exponer el error real de GitHub para un diagnóstico preciso.
-      const errorMsg = tokenData.error_description || tokenData.error || "Unknown error";
+      const errorMsg = tokenData.error_description || tokenData.error ||
+        `GitHub returned no access token (HTTP ${tokenResponse.status}, ${tokenResponse.headers.get("content-type") || "unknown content type"}).`;
       return callbackPage(url.origin, "error", { message: `GitHub error: ${errorMsg}` });
     }
     return callbackPage(url.origin, "success", { token: tokenData.access_token });
